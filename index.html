@@ -1,0 +1,62 @@
+<html>
+
+<head>
+	<title>CSV to Bookmakrs</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+ crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+ crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+ crossorigin="anonymous"></script>
+<script src="http://cdn.jsdelivr.net/g/filesaver.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+ crossorigin="anonymous">
+<script>
+	var openFile = function (event) {
+		var input = event.target;
+		let output = '<!DOCTYPE NETSCAPE-Bookmark-file-1> <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"> <TITLE>Bookmarks</TITLE> <H1>Bookmarks Menu</H1> <DL><p>     <HR>    <DT><H3 ADD_DATE="1512088815" LAST_MODIFIED="1512088815">Imported</H3> <DL><p> \n';
+		var reader = new FileReader();
+
+		reader.onload = function () {
+			try {
+				var text = reader.result;
+				var lines = text.split("\n");
+				$("#output").val(lines[0]);
+				lines.forEach(element => {
+					const name = element.split(",")[0];
+					const url = element.split(",")[1].substring(0, element.split(",")[1].length - 1);
+					const bookmark = '<DT><A HREF="' + url + '">' + name + '</A>\n';
+					output = output + bookmark;
+				});
+				output = output + '</DL><p> </DL>';
+				$("#output").val(output);
+				var blob = new Blob([output], { type: "text/html;charset=utf-8" });
+				saveAs(blob, "bookmarks.html");
+				$('#success').show();
+			} catch (err) {
+				$('#fail').show();
+			}
+		};
+		reader.readAsText(input.files[0]);
+	};
+
+</script>
+
+<body>
+	<div class="container">
+		<h1>Convert CSV to bookmarks import file</h1>
+		<input class="form-control-file" type='file' accept='text/csv' onchange='openFile(event)'><br>
+		<textarea class="form-control" rows='15' id='output'></textarea><br><br>
+		<div class="alert alert-success" id="success" role="alert" style="display:none">
+			File conversion complete!
+		</div>
+		<div class="alert alert-danger" id="fail" role="alert" style="display:none">
+			File Format not correct, please use csv file with comma separated values on it.
+		</div>
+	</div>
+
+
+</body>
+
+</html>
