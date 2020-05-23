@@ -25,10 +25,12 @@
 				var lines = text.split("\n");
 				$("#output").val(lines[0]);
 				lines.forEach(element => {
-					const name = element.split(",")[0];
-					const url = element.split(",")[1].substring(0, element.split(",")[1].length - 1);
-					const bookmark = '<DT><A HREF="' + url + '">' + name + '</A>\n';
-					output = output + bookmark;
+					if(!(element === "")) {
+						const name = element.split(",")[0];
+						const url = element.split(",")[1].substring(0, element.split(",")[1].length - 1);
+						const bookmark = '<DT><A HREF="' + url + '">' + name + '</A>\n';
+						output = output + bookmark;
+					}
 				});
 				output = output + '</DL><p> </DL>';
 				$("#output").val(output);
@@ -59,6 +61,9 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">CSV to bookmarks</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./images-to-pdf">Images to PDF</a>
 				</li>
 			</ul>
 		</div>
