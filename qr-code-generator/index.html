@@ -24,8 +24,8 @@
 		color = $('#color').val();
 		var qrcode = new QRCode("qrcode", {
 			text: "https://contactless.netlify.app/",
-			width: 128,
-			height: 128,
+			width: 200,
+			height: 200,
 			colorDark: color,
 			colorLight: "#ffffff",
 			correctLevel: QRCode.CorrectLevel.H
@@ -34,6 +34,11 @@
 		$("#colorpicker").click(function () {
 			updateCode();
 		});
+
+		$('#color').on('input', function () {
+			updateCode();
+		});
+
 
 		$('#size').on('input', function () {
 			updateCode();
@@ -95,14 +100,7 @@
 						Url
 					</div>
 					<div class="col-lg-10">
-						<input id="url" class="file-upload" type="input" placeholder="https://contactless.netlify.app/" value="https://contactless.netlify.app/" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2">
-					</div>
-					<div class="col-lg-10">
-						<input type="button" value="Get my Free QR Code" onclick="updateCode()"></input><br>
+						<input id="url" class="form-control" type="input" placeholder="https://contactless.netlify.app/" value="https://contactless.netlify.app/" />
 					</div>
 				</div>
 				<div class="row">
@@ -110,7 +108,7 @@
 						size
 					</div>
 					<div class="col-lg-10">
-						<input id="size" type="input" placeholder="Enter Size" value="150" /><br>
+						<input id="size" type="input" class="form-control" placeholder="Enter Size" value="200" /><br>
 					</div>
 				</div>
 				<div class="row">
@@ -118,15 +116,26 @@
 						Color:
 					</div>
 					<div class="col-lg-10">
-						<form><input type="text" id="color" name="color" value="#123456" /></form><br>
+						<form><input type="text" id="color" class="form-control" name="color" value="#123456" /></form><br>
 						<div id="colorpicker"></div><br>
 					</div>
 				</div>
-
-
+				<div class="row">
+					<div class="col-lg-2">
+					</div>
+					<div class="col-lg-10">
+						<input type="button" class="btn btn-primary" value="Get my Free QR Code" onclick="updateCode()"></input><br>
+					</div>
+				</div>
 			</div>
 			<div class="col-lg-6">
 				<div id="qrcode"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 align-self-center">
+				<br>
+				<a class="btn btn-light" target="_blank" href="https://davidshimjs.github.io/qrcodejs/">Using qrcodejs</a> and <a class="btn btn-light" target="_blank" href="https://acko.net/blog/farbtastic-jquery-color-picker-plug-in/">farbtastic</a>
 			</div>
 		</div>
 	</div>
