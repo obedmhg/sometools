@@ -30,6 +30,8 @@
 			colorLight: "#ffffff",
 			correctLevel: QRCode.CorrectLevel.H
 		});
+		var borderSize = 48 + parseInt(200);
+		setBorderStyle(borderSize, color);
 
 		$("#colorpicker").click(function () {
 			updateCode();
@@ -47,12 +49,15 @@
 		$("#addImg").click(function () {
 			logoUrl = $('#logoUrl').val();
 			size = $('#size').val();
-			var logoSize = (size * .3);
-			var xCoor = (size / 2) - (size * .08);
-			var yCoor = (size / 2) - (size * .1);
+			var logoSize = (size * .25);
+			var xCoor = (size / 2) - (logoSize / 4);
+			var yCoor = (size / 2) - (logoSize / 4);
+			alert(xCoor);
+			alert(yCoor);
 			var newImg = $("<img src='" + logoUrl + "' height='" + logoSize + "' weight='" + logoSize + "'/>");
 			newImg.css({ position: "absolute", left: xCoor, top: yCoor });
 			$("#qrcode").append(newImg);
+
 		});
 
 	});
@@ -62,6 +67,7 @@
 		$('#qrcode').empty();
 		color = $('#color').val();
 		size = $('#size').val();
+		var borderSize = 48 + parseInt(size);
 		qrcode = new QRCode("qrcode", {
 			text: url,
 			width: size,
@@ -70,12 +76,15 @@
 			colorLight: "#ffffff",
 			correctLevel: QRCode.CorrectLevel.H
 		});
-		var urlDiv = $("<a href='" + url + "'>" + url + "</a>");
-		$('#qrcode').append(urlDiv);
+		setBorderStyle(borderSize, color)
 	}
 
-
-
+	function setBorderStyle(borderSize, color) {
+		$('#border').css("border", "12px solid " + color)
+		$('#border').css("border-radius", "8px")
+		$('#border').css("border-bottom", "56px solid " + color)
+		$('#border').css("width", borderSize + "px")
+	}
 
 </script>
 
@@ -152,7 +161,11 @@
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<div id="qrcode"></div>
+				<div id="border">
+					<div style="border: 12px solid white; border-radius: 8px; width: 224px;">
+						<div id="qrcode"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
